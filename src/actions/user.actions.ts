@@ -64,3 +64,19 @@ export const getActivity = async (userId: string) => {
         throw new Error(error.message);
     }
 };
+
+export const fetchUsers = async (userId: string) => {
+    try {
+        const users = await db.user.findMany({
+            where: {
+                id: {
+                    not: userId
+                }
+            }
+        })
+
+        return users;
+    } catch (error: any) {
+        throw new Error(error.message)
+    }
+}
