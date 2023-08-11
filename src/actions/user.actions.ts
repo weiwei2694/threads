@@ -41,3 +41,26 @@ export const fetchUser = async ({
         throw new Error(error.message)
     }
 }
+
+export const getActivity = async (userId: string) => {
+    try {
+        const userThreads = await db.thread.findMany({
+            where: { userId },
+            include: { children: true },
+        });
+
+        const childThreadIds = userThreads.flatMap(userThread => userThread.children.map(child => child.id));
+
+        const replies = await db.thread.findMany({
+            where: {
+                id: { in: childThreadIds },
+                userId: { not: userId },
+            },
+            include: { user: true },
+        });
+
+        return replies;
+    } catch (error: any) {
+        throw new Error(error.message);
+    }
+};
