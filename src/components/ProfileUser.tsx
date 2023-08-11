@@ -6,7 +6,12 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { TbEdit } from "react-icons/tb";
 
-const ProfileUser = ({ user }: { user: User }) => {
+interface Props {
+  user: User;
+  personal: boolean;
+}
+
+const ProfileUser = ({ user, personal }: Props) => {
   const router = useRouter();
 
   return (
@@ -36,16 +41,18 @@ const ProfileUser = ({ user }: { user: User }) => {
         </div>
 
         {/* Edit Profile Button */}
-        <Button
-          type="button"
-          className="bg-dark-3 hover:bg-dark-2 flex items-center px-4 sm:gap-2 gap-0 tracking-wider font-medium text-light-1"
-          onClick={() => router.push("/profile/edit")}
-        >
-          <span className="sm:text-xl text-base text-primary-500">
-            <TbEdit />
-          </span>
-          <span className="hidden sm:block">Edit</span>
-        </Button>
+        {personal && (
+          <Button
+            type="button"
+            className="bg-dark-3 hover:bg-dark-2 flex items-center px-4 sm:gap-2 gap-0 tracking-wider font-medium text-light-1"
+            onClick={() => router.push("/profile/edit")}
+          >
+            <span className="sm:text-xl text-base text-primary-500">
+              <TbEdit />
+            </span>
+            <span className="hidden sm:block">Edit</span>
+          </Button>
+        )}
       </div>
 
       {/* Bio */}

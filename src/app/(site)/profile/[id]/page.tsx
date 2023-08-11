@@ -8,12 +8,12 @@ import { profileTabs } from "@/constants";
 import Image from "next/image";
 import ThreadCard from "@/components/cards/ThreadCard";
 
-const Page = async () => {
+const Page = async ({ params }: { params: { id: string } }) => {
   const user = await currentUser();
   if (!user) return null;
 
-  const userInfo: any = await fetchUser({ id: user.id });
-  if (!userInfo) redirect("/auth/sync-user");
+  const userInfo: any = await fetchUser({ id: params.id });
+  if (!userInfo) redirect("/");
 
   return (
     <section>
