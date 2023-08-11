@@ -25,13 +25,33 @@ const Page = async ({ params }: { params: { id: string } }) => {
       />
 
       {/* Comment */}
-      <div className="mt-12">
+      <div className="mt-8">
         <div className="py-6 border-t border-b border-dark-3">
           <Comment parentId={thread.id} author={userInfo} />
         </div>
       </div>
 
       {/* Reply */}
+      <div className="mt-12">
+        <div className="flex flex-col gap-8 mx-8">
+          {thread.children.length > 0 ? (
+            <>
+              {thread.children.map((childItem) => (
+                <ThreadCard
+                  key={childItem.id}
+                  parentId={childItem.id}
+                  author={childItem.user}
+                  text={childItem.text}
+                  comments={childItem.children}
+                  isComment
+                />
+              ))}
+            </>
+          ) : (
+            <p className="no-result">No Replies</p>
+          )}
+        </div>
+      </div>
     </section>
   );
 };
