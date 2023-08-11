@@ -83,12 +83,15 @@ export const getActivity = async (userId: string) => {
 export const fetchUsers = async ({
   userId,
   searchString = "",
+  take = 25,
 }: {
   userId: string;
   searchString: string;
+  take?: number | null;
 }) => {
   try {
     const users = await db.user.findMany({
+      take: take || 25,
       where: {
         id: {
           not: userId,
