@@ -4,7 +4,7 @@
  
 /* heading */
 .heading-1 {
-  @apply text-2xl text-light-1 font-extrabold tracking-wide;
+  @apply text-3xl text-light-1 font-extrabold tracking-wide;
 }
 
 .heading-2 {
