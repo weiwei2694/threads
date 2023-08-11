@@ -38,7 +38,11 @@ export const fetchThreads = async () => {
             where: { parentId: null },
             include: {
                 user: true,
-                children: true
+                children: {
+                    include: {
+                        user: true,
+                    }
+                }
             }
         })
 
@@ -57,7 +61,11 @@ export const fetchThread = async (id: string) => {
                 children: {
                     include: {
                         user: true,
-                        children: true
+                        children: {
+                            include: {
+                                user: true
+                            }
+                        }
                     }
                 }
             }
