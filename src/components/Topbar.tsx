@@ -22,7 +22,7 @@ function Topbar({ user }: Props) {
       <div className="flex items-center gap-1">
         <div className="block md:hidden">
           <SignedIn>
-            <SignOutButton signOutCallback={() => router.push("/sign-in")}>
+            <SignOutButton signOutCallback={() => router.push("/auth/sign-in")}>
               <div className="flex cursor-pointer">
                 <Image
                   src="/assets/logout.svg"
