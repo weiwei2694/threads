@@ -31,3 +31,19 @@ export const createThread = async ({
         throw new Error(error.message)
     }
 };
+
+export const fetchThreads = async () => {
+    try {
+        const threads = await db.thread.findMany({
+            where: { parentId: null },
+            include: {
+                user: true,
+                children: true
+            }
+        })
+
+        return threads;
+    } catch (error: any) {
+        throw new Error(error.message)
+    }
+}
