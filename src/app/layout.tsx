@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Manrope } from 'next/font/google'
 import LeftSidebar from '@/components/LeftSidebar'
+import RightSidebar from '@/components/RightSidebar'
 
 const manrope = Manrope({ subsets: ['latin'] })
 
@@ -26,8 +27,8 @@ export default function RootLayout({
               {children}
             </div>
           </section>
-          
-          {/* RightSideBar */}
+
+          <RightSidebar />
         </main>
       </body>
     </html>
