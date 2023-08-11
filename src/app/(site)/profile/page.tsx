@@ -46,21 +46,23 @@ const Page = async () => {
             ))}
           </TabsList>
           <TabsContent value="threads">
-            {userInfo.threads.length > 0 ? (
-              <div className="mt-12 flex flex-col gap-8">
-                {userInfo.threads.map((thread: any) => (
-                  <ThreadCard
-                    author={userInfo}
-                    text={thread.text}
-                    parentId={thread.id}
-                    isComment
-                    comments={thread.children}
-                  />
-                ))}
-              </div>
-            ) : (
-              <p className="no-result">No threads yet</p>
-            )}
+            <div className="mt-12">
+              {userInfo.threads.length > 0 ? (
+                <div className="flex flex-col gap-8">
+                  {userInfo.threads.map((thread: any) => (
+                    <ThreadCard
+                      author={userInfo}
+                      text={thread.text}
+                      parentId={thread.id}
+                      isComment
+                      comments={thread.children}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <p className="no-result">No threads yet</p>
+              )}
+            </div>
           </TabsContent>
         </Tabs>
       </div>
