@@ -45,6 +45,15 @@
   @apply text-light-3 hover:text-light-2 transition-all text-2xl;
 }
 
+/* comment */
+.comment-input {
+  @apply p-0 m-0 w-full bg-transparent border-none outline-none text-light-2 font-medium tracking-wider placeholder:text-light-3 text-base !important;
+}
+
+.comment-button {
+  @apply bg-primary-500 px-6 rounded-full !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
