@@ -24,6 +24,7 @@ module.exports = {
         "light-1": "#fff",
         "light-2": "#dcdcdc",
         "light-3": "#5C5C7B",
+        glassmorphism: "rgba(16, 16, 18, 0.60)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

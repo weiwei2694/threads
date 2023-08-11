@@ -7,6 +7,7 @@ import Topbar from "@/components/Topbar";
 import { ClerkProvider, currentUser } from "@clerk/nextjs";
 import { fetchUser } from "@/actions/user.actions";
 import { redirect } from "next/navigation";
+import Bottombar from "@/components/Bottombar";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
@@ -41,6 +42,8 @@ export default async function RootLayout({
 
             <RightSidebar />
           </main>
+
+          <Bottombar />
         </body>
       </html>
     </ClerkProvider>
