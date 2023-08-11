@@ -10,7 +10,7 @@ const ProfileUser = ({ user }: { user: User }) => {
   const router = useRouter();
 
   return (
-    <header className="flex flex-col">
+    <div className="flex flex-col">
       <div className="flex flex-row justify-between">
         <div className="flex flex-row items-center sm:gap-5 gap-2">
           {/* Image */}
@@ -44,9 +44,7 @@ const ProfileUser = ({ user }: { user: User }) => {
           <span className="sm:text-xl text-base text-primary-500">
             <TbEdit />
           </span>
-          <span className="hidden sm:block">
-            Edit
-          </span>
+          <span className="hidden sm:block">Edit</span>
         </Button>
       </div>
 
@@ -58,7 +56,7 @@ const ProfileUser = ({ user }: { user: User }) => {
       </div>
 
       <div className="h-[2px] w-full bg-dark-3" />
-    </header>
+    </div>
   );
 };
 

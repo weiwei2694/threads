@@ -20,6 +20,19 @@ export const fetchUser = async ({
   try {
     const user = await db.user.findUnique({
       where: { id },
+      include: {
+        threads: {
+          where: { parentId: null },
+          include: {
+            user: true,
+            children: {
+              include: {
+                user: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (user) return user;

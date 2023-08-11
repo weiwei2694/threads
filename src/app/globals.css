@@ -54,6 +54,14 @@
   @apply bg-primary-500 px-6 rounded-full !important;
 }
 
+/* tab */
+.tabs-list {
+  @apply w-full flex flex-row py-6 px-0 rounded-xl overflow-hidden bg-dark-3 !important;
+}
+.tabs-trigger {
+  @apply bg-dark-3 w-full h-full flex flex-row gap-2 p-10 data-[state=active]:bg-dark-2 data-[state=active]:text-light-2 rounded-none !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
