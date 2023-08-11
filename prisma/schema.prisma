@@ -8,21 +8,24 @@ datasource db {
 }
 
 model User {
-  id       String   @id
-  name     String
-  username String   @unique
-  email    String   @unique
-  image    String
-  bio      String?
-  threads  Thread[]
+  id        String   @id
+  name      String
+  username  String   @unique
+  email     String   @unique
+  image     String
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  threads   Thread[]
 }
 
 model Thread {
-  id       String   @id @default(uuid())
-  text     String   @db.Text
-  parentId String?
-  userId   String
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  parent   Thread?  @relation("Children", fields: [parentId], references: [id], onDelete: Cascade)
-  children Thread[] @relation("Children")
+  id        String   @id @default(uuid())
+  text      String   @db.Text
+  parentId  String?
+  userId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parent    Thread?  @relation("Children", fields: [parentId], references: [id], onDelete: Cascade)
+  children  Thread[] @relation("Children")
 }
