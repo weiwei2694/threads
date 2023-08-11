@@ -22,7 +22,7 @@ const Page = async () => {
         {activity.length > 0 ? (
           <div className="flex flex-col gap-8">
             {activity.map((activityItem) => (
-              <ActivityCard thread={activityItem} />
+              <ActivityCard key={activityItem.id} thread={activityItem} />
             ))}
           </div>
         ) : (

@@ -23,7 +23,7 @@ const ActivityCard = ({ thread }: Props) => {
     const router = useRouter();
 
   return (
-    <article className="p-6 rounded-xl bg-dark-2 hover:bg-dark-3 transition-all flex flex-row items-start justify-start gap-6 cursor-pointer" onClick={() => router.push(`/thread/${thread.id}`)}>
+    <article className="p-6 rounded-xl bg-dark-2 hover:bg-dark-3 transition-all flex flex-row items-start justify-start gap-2 cursor-pointer" onClick={() => router.push(`/thread/${thread.id}`)}>
       <div className="flex flex-row gap-4 items-start">
         <Link href={`/profile/${thread.user.id}`}>
           <Image
@@ -48,7 +48,7 @@ const ActivityCard = ({ thread }: Props) => {
       </div>
 
       <div>
-        <p className="text-light-1 text-sm font-medium tracking-wider">
+        <p className="text-light-1 text-sm font-light tracking-wider">
           replied to your thread.{" "}
           <span className="text-light-3">{timeAgo(thread.createdAt)}</span>
         </p>
