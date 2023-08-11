@@ -47,3 +47,24 @@ export const fetchThreads = async () => {
         throw new Error(error.message)
     }
 }
+
+export const fetchThread = async (id: string) => {
+    try {
+        const thread = await db.thread.findUnique({
+            where: { id },
+            include: {
+                user: true,
+                children: {
+                    include: {
+                        user: true,
+                        children: true
+                    }
+                }
+            }
+        })
+
+        return thread;
+    } catch (error: any) {
+        throw new Error(error.message)
+    }
+}

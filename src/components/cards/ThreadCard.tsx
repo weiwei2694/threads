@@ -9,7 +9,7 @@ interface Props {
   text: string;
   comments: Thread[];
   parentId: string;
-  isComment: boolean; 
+  isComment?: boolean; 
 }
 
 const ThreadCard = ({
