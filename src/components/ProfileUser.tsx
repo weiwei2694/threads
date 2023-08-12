@@ -31,6 +31,7 @@ const ProfileUser = ({ personalUser, userInfo, personal }: Props) => {
               alt={userInfo.name}
               width={80}
               height={80}
+              priority
               className="rounded-full object-cover w-[60px] md:w-[80px] h-[60px] md:h-[80px]"
             />
           </div>

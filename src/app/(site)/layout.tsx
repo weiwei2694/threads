@@ -34,7 +34,7 @@ export default async function RootLayout({
           <Topbar user={userInfo} />
 
           <main className="flex flex-row">
-            <LeftSidebar />
+            <LeftSidebar userInfo={userInfo} />
 
             <section className="main-container">
               <div className="max-w-4xl w-full">{children}</div>
