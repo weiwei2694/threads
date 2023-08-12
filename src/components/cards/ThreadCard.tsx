@@ -1,11 +1,11 @@
 "use client";
 import { Like } from "@prisma/client";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import { AiOutlineComment } from "react-icons/ai";
+import { AiOutlineCheck, AiOutlineComment } from "react-icons/ai";
 import { deleteThread, likeThread } from "@/actions/thread.actions";
 
 interface CommentsProps {
@@ -40,12 +40,23 @@ const ThreadCard = ({
   const router = useRouter();
   const path = usePathname();
 
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition(); // mutation for the like feature
+  const [mutation, setMutation] = useState(false); // mutation for share feature 
 
+  // delete feature
   const handleDeleteThread = async () => {
     const hasConfirmed = confirm('are you sure to delete this thread?')
 
     if (hasConfirmed) await deleteThread({ id: parentId, path })
+  }
+
+  // share feature
+  const handleShareThread = (url: string) => {
+    setMutation(true)
+    const domain = process.env.NEXT_PUBLIC_DOMAIN;
+
+    navigator.clipboard.writeText(`${domain}${url}`)
+    setTimeout(() => setMutation(false), 2000)
   }
 
   return (
@@ -77,11 +88,13 @@ const ThreadCard = ({
             </p>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex flex-row items-center gap-4">
+            {/* Comment */}
             <Link href={`/thread/${parentId}`} className="icon-card">
               <AiOutlineComment />
             </Link>
 
+            {/* Like */}
             <button
               type="button"
               disabled={isPending}
@@ -195,6 +208,17 @@ const ThreadCard = ({
                   )}
                 </>
               )}
+            </button>
+
+            {/* Share */}
+            <button disabled={mutation} type="button" onClick={() => !mutation && handleShareThread(`/thread/${parentId}/?utm_source=thread_web_copy_link`)}>
+              {mutation ? (
+                <span className="icon-card">
+                  <AiOutlineCheck />
+                </span>
+              ) : 
+              <Image src="/assets/share.svg" alt="Share" width={25} height={25} className="object-contain w-[25px] h-[25px]" />
+              }
             </button>
           </div>
         </div>
