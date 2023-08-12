@@ -19,6 +19,7 @@ model User {
   threads    Thread[]
   followers  Follower[] @relation("FollowerToUser")
   followings Follower[] @relation("FollowingToUser")
+  likes      Like[]     @relation("UserLikes")
 }
 
 model Follower {
@@ -38,4 +39,13 @@ model Thread {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   parent    Thread?  @relation("Children", fields: [parentId], references: [id], onDelete: Cascade)
   children  Thread[] @relation("Children")
+  likes     Like[]   @relation("PostLikes")
+}
+
+model Like {
+  id       String @id @default(uuid())
+  userId   String
+  threadId String
+  user     User   @relation("UserLikes", fields: [userId], references: [id], onDelete: Cascade)
+  thread   Thread @relation("PostLikes", fields: [threadId], references: [id], onDelete: Cascade)
 }
