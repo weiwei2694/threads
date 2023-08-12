@@ -30,6 +30,7 @@ interface Props {
 
 const AccountProfile = ({ user }: Props) => {
   const [files, setFiles] = useState<File[]>([]);
+  const [mutation, setMutation] = useState(false)
 
   const path = usePathname();
   const router = useRouter();
@@ -71,37 +72,45 @@ const AccountProfile = ({ user }: Props) => {
 
   const onSubmit = async (values: z.infer<typeof userValidation>) => {
 
-    if (files.length > 0) {
-      const formData = new FormData();
-      formData.append("file", files[0]);
-      formData.append("upload_preset", process.env.NEXT_PUBLIC_SECRET_KEY ?? "");
+    setMutation(true)
 
-      const res = await fetch(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      
-      if (res.status !== 200) return null;
-
-      const { secure_url } = await res.json()
-
-      values.image = secure_url
+    try {
+      if (files.length > 0) {
+        const formData = new FormData();
+        formData.append("file", files[0]);
+        formData.append("upload_preset", process.env.NEXT_PUBLIC_SECRET_KEY ?? "");
+  
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        
+        if (res.status !== 200) return null;
+  
+        const { secure_url } = await res.json()
+  
+        values.image = secure_url
+      }
+  
+      await updateUser({
+        id: user.id,
+        name: values.name,
+        username: values.username,
+        bio: values.bio,
+        image: values.image,
+        path,
+        email: user.email,
+      });
+  
+      router.push("/profile"); 
+    } catch (error: any) {
+      throw new Error(error.message)
+    } finally {
+      setMutation(false)
     }
-
-    await updateUser({
-      id: user.id,
-      name: values.name,
-      username: values.username,
-      bio: values.bio,
-      image: values.image,
-      path,
-      email: user.email,
-    });
-
-    router.push("/profile");
   };
 
   return (
@@ -206,8 +215,8 @@ const AccountProfile = ({ user }: Props) => {
         />
 
         {/* Save Changes Button */}
-        <Button type="submit" className="bg-primary-500 w-full">
-          Save Changes
+        <Button type="submit" disabled={mutation} className="bg-primary-500 w-full">
+          {mutation ? 'Save Changes...' : 'Save Changes'}
         </Button>
       </form>
     </Form>
