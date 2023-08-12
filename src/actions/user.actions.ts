@@ -32,6 +32,8 @@ export const fetchUser = async ({
     const user = await db.user.findUnique({
       where: { id },
       include: {
+        followers: true,
+        followings: true,
         threads: {
           where: { parentId: null },
           include: {
@@ -158,6 +160,38 @@ export const updateUser = async ({
     revalidatePath(path)
 
     return updateUser;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+export const followUser = async ({ followerId, followingId, path }: { followerId: string; followingId: string; path: string; }) => {
+  try {
+    const existingFollower = await db.follower.findFirst({
+      where: {
+        followerId: followerId,
+        followingId: followingId
+      }
+    });
+
+    if (existingFollower) {
+      await db.follower.delete({
+        where: {
+          id: existingFollower.id
+        }
+      });
+
+      return revalidatePath(path)
+    }
+
+    await db.follower.create({
+      data: {
+        followerId: followerId,
+        followingId: followingId
+      }
+    });
+
+    return revalidatePath(path)
   } catch (error: any) {
     throw new Error(error.message);
   }

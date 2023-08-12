@@ -17,7 +17,7 @@ const Page = async () => {
 
   return (
     <section>
-      <ProfileUser user={userInfo} personal={user.id === userInfo.id} />
+      <ProfileUser userInfo={userInfo} personal={user.id === userInfo.id} />
 
       <div className="mt-8">
         <Tabs defaultValue="threads">

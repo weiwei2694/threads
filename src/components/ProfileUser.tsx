@@ -1,18 +1,24 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useTransition } from "react";
 
-import { User } from "@prisma/client";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { TbEdit } from "react-icons/tb";
+import { followUser } from "@/actions/user.actions";
+import { User } from "@prisma/client";
 
 interface Props {
-  user: User;
+  personalUser?: User | null;
+  userInfo: any;
   personal: boolean;
 }
 
-const ProfileUser = ({ user, personal }: Props) => {
+const ProfileUser = ({ personalUser, userInfo, personal }: Props) => {
   const router = useRouter();
+  const path = usePathname();
+
+  const [isPending, startTransition] = useTransition();
 
   return (
     <div className="flex flex-col">
@@ -21,8 +27,8 @@ const ProfileUser = ({ user, personal }: Props) => {
           {/* Image */}
           <div className="relative">
             <Image
-              src={user.image}
-              alt={user.name}
+              src={userInfo.image}
+              alt={userInfo.name}
               width={80}
               height={80}
               className="rounded-full object-cover w-[45px] sm:w-[80px] h-[45px] sm:h-[80px]"
@@ -32,16 +38,16 @@ const ProfileUser = ({ user, personal }: Props) => {
           {/* Name, Username */}
           <div className="flex flex-col">
             <h1 className="sm:text-2xl text-sm text-light-1 font-extrabold tracking-wide">
-              {user.name}
+              {userInfo.name}
             </h1>
             <h3 className="text-light-2 font-medium tracking-wider sm:text-lg text-xs">
-              @{user.username}
+              @{userInfo.username}
             </h3>
           </div>
         </div>
 
         {/* Edit Profile Button */}
-        {personal && (
+        {personal ? (
           <Button
             type="button"
             className="bg-dark-3 hover:bg-dark-2 flex items-center px-4 sm:gap-2 gap-0 tracking-wider font-medium text-light-1"
@@ -52,13 +58,38 @@ const ProfileUser = ({ user, personal }: Props) => {
             </span>
             <span className="hidden sm:block">Edit</span>
           </Button>
+        ) : (
+          <div className="flex flex-row items-center justify-start gap-5">
+            <Button
+              type="button"
+              className="bg-dark-3 hover:bg-dark-2 flex items-center px-4 sm:gap-2 gap-0 tracking-wider font-medium text-light-1"
+              onClick={() =>
+                startTransition(() =>
+                  followUser({
+                    followerId: userInfo.id,
+                    followingId: personalUser?.id || "",
+                    path,
+                  })
+                )
+              }
+            >
+              {isPending
+                ? "..."
+                : userInfo.followers.find(
+                    ({ followingId }: { followingId: string }) =>
+                      followingId === personalUser?.id
+                  )
+                ? "Unfollow"
+                : "Follow"}
+            </Button>
+          </div>
         )}
       </div>
 
       {/* Bio */}
       <div className="mt-5 mb-12">
         <p className="text-light-2 font-medium tracking-wider sm:text-sm text-xs leading-6">
-          {user.bio ? user.bio : "No bio yet"}
+          {userInfo.bio ? userInfo.bio : "No bio yet"}
         </p>
       </div>
 
