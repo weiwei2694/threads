@@ -8,15 +8,25 @@ datasource db {
 }
 
 model User {
-  id        String   @id
-  name      String
-  username  String   @unique
-  email     String   @unique
-  image     String
-  bio       String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  threads   Thread[]
+  id         String     @id
+  name       String
+  username   String     @unique
+  email      String     @unique
+  image      String
+  bio        String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  threads    Thread[]
+  followers  Follower[] @relation("FollowerToUser")
+  followings Follower[] @relation("FollowingToUser")
+}
+
+model Follower {
+  id          String @id @default(uuid())
+  follower    User   @relation("FollowerToUser", fields: [followerId], references: [id])
+  followerId  String
+  following   User   @relation("FollowingToUser", fields: [followingId], references: [id])
+  followingId String
 }
 
 model Thread {
