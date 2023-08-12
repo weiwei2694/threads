@@ -17,7 +17,7 @@ const UserCard = ({ user }: { user: User }) => {
             alt={user.name}
             width={50}
             height={50}
-            className="object-contain rounded-full"
+            className="object-cover w-[50px] h-[50px] rounded-full"
           />
         </Link>
         <div className="flex flex-col">

@@ -59,13 +59,13 @@ const Comment = ({ author, parentId }: Props) => {
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1 flex-1">
               <div className="flex flex-row items-center gap-5">
-                <FormLabel className="relative w-11 h-11">
+                <FormLabel className="relative">
                   <Image
                     src={author.image}
                     alt={author.name}
-                    width={44}
-                    height={44}
-                    className="object-contain rounded-full"
+                    width={40}
+                    height={40}
+                    className="object-cover w-[40px] h-[40px] rounded-full"
                   />
                 </FormLabel>
                 <FormControl>

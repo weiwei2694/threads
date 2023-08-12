@@ -25,7 +25,7 @@ const ProfileUser = ({ user, personal }: Props) => {
               alt={user.name}
               width={80}
               height={80}
-              className="rounded-full object-contain w-[45px] sm:w-[80px] h-[45px] sm:h-[80px]"
+              className="rounded-full object-cover w-[45px] sm:w-[80px] h-[45px] sm:h-[80px]"
             />
           </div>
 

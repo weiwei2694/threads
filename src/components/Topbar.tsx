@@ -43,9 +43,9 @@ function Topbar({ user }: Props) {
             <Image
               src={user.image}
               alt={user.name}
-              width={40}
-              height={40}
-              className="object-contain rounded-lg"
+              width={50}
+              height={50}
+              className="object-cover rounded-lg w-[50px] h-[50px]"
             />
           </Link>
         </div>

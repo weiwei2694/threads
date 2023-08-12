@@ -41,7 +41,7 @@ const ActivityCard = ({ thread }: Props) => {
             alt={thread.user.name}
             width={40}
             height={40}
-            className="object-contain rounded-full"
+            className="object-cover w-[40px] h-[40px] rounded-full"
           />
         </Link>
         <div className="flex flex-col">

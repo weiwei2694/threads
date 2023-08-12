@@ -30,13 +30,13 @@ const ThreadCard = ({ author, text, parentId, comments, isComment }: Props) => {
     <article className="p-7 rounded-xl bg-dark-2 flex flex-col gap-6">
       <div className="flex flex-row gap-5">
         <div className="flex flex-col items-center gap-3">
-          <div className="relative w-11 h-11">
+          <div className="relative">
             <Image
               src={author.image}
               alt={author.name}
               width={40}
               height={40}
-              className="rounded-full object-contain"
+              className="rounded-full object-cover w-[40px] h-[40px]"
             />
           </div>
 
@@ -79,7 +79,7 @@ const ThreadCard = ({ author, text, parentId, comments, isComment }: Props) => {
                   alt={childItem.user.name}
                   width={20}
                   height={20}
-                  className="rounded-full object-contain"
+                  className="rounded-full object-cover w-[20px] h-[20px]"
                 />
               </div>
             ))}
