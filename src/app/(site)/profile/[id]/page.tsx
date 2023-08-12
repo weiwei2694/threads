@@ -64,8 +64,9 @@ const Page = async ({ params }: { params: { id: string } }) => {
                       userId={personalUser.id}
                       text={thread.text}
                       parentId={thread.id}
-                      isComment
                       comments={thread.children}
+                      isComment
+                      isProfile
                     />
                   ))}
                 </div>

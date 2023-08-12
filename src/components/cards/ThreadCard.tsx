@@ -6,7 +6,7 @@ import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineComment } from "react-icons/ai";
-import { likeThread } from "@/actions/thread.actions";
+import { deleteThread, likeThread } from "@/actions/thread.actions";
 
 interface CommentsProps {
   id: string;
@@ -23,6 +23,7 @@ interface Props {
   comments: CommentsProps[];
   parentId: string;
   likes: Like[];
+  isProfile?: boolean;
   isComment?: boolean;
 }
 
@@ -33,6 +34,7 @@ const ThreadCard = ({
   parentId,
   comments,
   likes,
+  isProfile,
   isComment,
 }: Props) => {
   const router = useRouter();
@@ -40,8 +42,14 @@ const ThreadCard = ({
 
   const [isPending, startTransition] = useTransition();
 
+  const handleDeleteThread = async () => {
+    const hasConfirmed = confirm('are you sure to delete this thread?')
+
+    if (hasConfirmed) await deleteThread({ id: parentId, path })
+  }
+
   return (
-    <article className="p-7 rounded-xl bg-dark-2 flex flex-col gap-6">
+    <article className="p-7 rounded-xl bg-dark-2 flex flex-col gap-6 relative">
       <div className="flex flex-row gap-5">
         <div className="flex flex-col items-center gap-3">
           <div className="relative">
@@ -220,6 +228,16 @@ const ThreadCard = ({
           </p>
         </div>
       )}
+
+      {/* isProfile | Delete Thread Feature */}
+      {isProfile && (
+        <div className="absolute top-6 right-6">
+          <button type="button" onClick={handleDeleteThread}>
+            <Image src="/assets/delete.svg" alt="Delete" width={23} height={23} className="object-contain" />
+          </button>
+        </div>
+      )}
+
     </article>
   );
 };

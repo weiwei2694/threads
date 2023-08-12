@@ -114,3 +114,19 @@ export const likeThread = async ({
     throw new Error(error.message);
   }
 };
+
+export const deleteThread = async ({
+  id,
+  path,
+}: {
+  id: string;
+  path: string;
+}) => {
+  try {
+    await db.thread.delete({ where: { id } })
+
+    return revalidatePath(path)
+  } catch (error:any) {
+    throw new Error(error.message)
+  }
+}
