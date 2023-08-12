@@ -1,13 +1,14 @@
 "use client";
-
-import { useRouter } from "next/navigation";
+import { Like } from "@prisma/client";
+import { useTransition } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-
 import { AiOutlineComment } from "react-icons/ai";
+import { likeThread } from "@/actions/thread.actions";
 
-interface Comments {
+interface CommentsProps {
   id: string;
   parentId: string | null;
   text: string;
@@ -17,14 +18,27 @@ interface Comments {
 
 interface Props {
   author: User;
+  userId: string;
   text: string;
-  comments: Comments[];
+  comments: CommentsProps[];
   parentId: string;
+  likes: Like[];
   isComment?: boolean;
 }
 
-const ThreadCard = ({ author, text, parentId, comments, isComment }: Props) => {
+const ThreadCard = ({
+  author,
+  userId,
+  text,
+  parentId,
+  comments,
+  likes,
+  isComment,
+}: Props) => {
   const router = useRouter();
+  const path = usePathname();
+
+  const [isPending, startTransition] = useTransition();
 
   return (
     <article className="p-7 rounded-xl bg-dark-2 flex flex-col gap-6">
@@ -55,17 +69,132 @@ const ThreadCard = ({ author, text, parentId, comments, isComment }: Props) => {
             </p>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex gap-4">
             <Link href={`/thread/${parentId}`} className="icon-card">
               <AiOutlineComment />
             </Link>
+
+            <button
+              type="button"
+              disabled={isPending}
+              onClick={() =>
+                startTransition(() =>
+                  likeThread({ userId, threadId: parentId, path })
+                )
+              }
+            >
+              {isPending ? (
+                <div aria-label="Loading..." role="status">
+                  <svg
+                    className="animate-spin w-4 h-4 stroke-light-3"
+                    viewBox="0 0 256 256"
+                  >
+                    <line
+                      x1={128}
+                      y1={32}
+                      x2={128}
+                      y2={64}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={24}
+                    ></line>
+                    <line
+                      x1="195.9"
+                      y1="60.1"
+                      x2="173.3"
+                      y2="82.7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={24}
+                    ></line>
+                    <line
+                      x1={224}
+                      y1={128}
+                      x2={192}
+                      y2={128}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={24}
+                    ></line>
+                    <line
+                      x1="195.9"
+                      y1="195.9"
+                      x2="173.3"
+                      y2="173.3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={24}
+                    ></line>
+                    <line
+                      x1={128}
+                      y1={224}
+                      x2={128}
+                      y2={192}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={24}
+                    ></line>
+                    <line
+                      x1="60.1"
+                      y1="195.9"
+                      x2="82.7"
+                      y2="173.3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={24}
+                    ></line>
+                    <line
+                      x1={32}
+                      y1={128}
+                      x2={64}
+                      y2={128}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={24}
+                    ></line>
+                    <line
+                      x1="60.1"
+                      y1="60.1"
+                      x2="82.7"
+                      y2="82.7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={24}
+                    ></line>
+                  </svg>
+                </div>
+              ) : (
+                <>
+                  {likes.find(
+                    (like) =>
+                      like.userId === userId && like.threadId === parentId
+                  ) ? (
+                    <Image
+                      src="/assets/heart-filled.svg"
+                      alt="Like"
+                      width={25}
+                      height={25}
+                      className="w-[25px] h-[25px] object-contain"
+                    />
+                  ) : (
+                    <Image
+                      src="/assets/heart-gray.svg"
+                      alt="Like"
+                      width={25}
+                      height={25}
+                      className="w-[25px] h-[25px] object-contain"
+                    />
+                  )}
+                </>
+              )}
+            </button>
           </div>
         </div>
       </div>
 
-      {isComment && comments.length > 0 && (
+      {isComment && (
         <div
-          className="flex gap-3 items-center cursor-pointer w-fit group"
+          className="flex gap-3 items-center cursor-pointer w-fit"
           onClick={() => router.push(`/thread/${parentId}`)}
         >
           <div className="flex row">
@@ -85,8 +214,9 @@ const ThreadCard = ({ author, text, parentId, comments, isComment }: Props) => {
             ))}
           </div>
 
-          <p className="text-xs font-normal tracking-wider text-light-2 underline group-hover:text-primary-500 transition-all">
-            <span>{comments.length}</span> replies
+          <p className="text-xs font-normal tracking-wider text-light-2">
+            {comments.length > 0 && <span>{comments.length} replies •</span>}{" "}
+            <span>{likes.length}</span> likes
           </p>
         </div>
       )}

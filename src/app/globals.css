@@ -60,7 +60,7 @@
 
 /* links - card */
 .icon-card {
-  @apply text-light-3 hover:text-light-2 transition-all text-2xl;
+  @apply text-light-3 text-2xl;
 }
 
 /* comment */

@@ -13,16 +13,18 @@ const Page = async ({ params }: { params: { id: string } }) => {
   if (!user) return null;
 
   const personalUser = await fetchUser({ id: user.id });
-  if (!personalUser) redirect('/auth/sync-user')
+  if (!personalUser) redirect("/auth/sync-user");
 
   const userInfo: any = await fetchUser({ id: params.id });
   if (!userInfo) redirect("/");
 
-
-
   return (
     <section>
-      <ProfileUser userInfo={userInfo} personalUser={personalUser} personal={user.id === userInfo.id} />
+      <ProfileUser
+        userInfo={userInfo}
+        personalUser={personalUser}
+        personal={user.id === userInfo.id}
+      />
 
       <div className="mt-8">
         <Tabs defaultValue="threads">
@@ -58,6 +60,8 @@ const Page = async ({ params }: { params: { id: string } }) => {
                     <ThreadCard
                       key={thread.id}
                       author={userInfo}
+                      likes={thread.likes}
+                      userId={personalUser.id}
                       text={thread.text}
                       parentId={thread.id}
                       isComment

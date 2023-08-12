@@ -18,7 +18,9 @@ const Page = async ({ params }: { params: { id: string } }) => {
   return (
     <section>
       <ThreadCard
+        userId={userInfo.id}
         text={thread.text}
+        likes={thread.likes}
         author={thread.user}
         comments={thread.children}
         parentId={thread.id}
@@ -33,15 +35,17 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
       {/* Reply */}
       <div className="mt-12">
-        <div className="flex flex-col gap-8 mx-8">
+        <div className="flex flex-col gap-8 md:mx-8 mx-0">
           {thread.children.length > 0 ? (
             <>
               {thread.children.map((childItem) => (
                 <ThreadCard
                   key={childItem.id}
+                  userId={userInfo.id}
                   parentId={childItem.id}
                   author={childItem.user}
                   text={childItem.text}
+                  likes={childItem.likes}
                   comments={childItem.children}
                   isComment
                 />

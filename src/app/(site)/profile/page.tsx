@@ -51,7 +51,10 @@ const Page = async () => {
                 <div className="flex flex-col gap-8">
                   {userInfo.threads.map((thread: any) => (
                     <ThreadCard
-                      author={userInfo}
+                      key={thread.id}
+                      likes={thread.likes}
+                      author={thread.user}
+                      userId={userInfo.id}
                       text={thread.text}
                       parentId={thread.id}
                       isComment

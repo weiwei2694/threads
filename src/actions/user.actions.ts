@@ -38,6 +38,7 @@ export const fetchUser = async ({
           where: { parentId: null },
           include: {
             user: true,
+            likes: true,
             children: {
               include: {
                 user: true,

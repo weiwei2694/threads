@@ -28,10 +28,12 @@ export default async function Home() {
               {threads.map((thread) => (
                 <ThreadCard
                   key={thread.id}
+                  userId={userInfo.id}
                   parentId={thread.id}
                   author={thread.user}
                   text={thread.text}
                   comments={thread.children}
+                  likes={thread.likes}
                   isComment
                 />
               ))}
