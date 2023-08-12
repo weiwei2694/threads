@@ -1,6 +1,7 @@
 "use server";
 
 import db from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 interface fetchUserParams {
   id: string;
@@ -8,6 +9,16 @@ interface fetchUserParams {
   username?: string;
   email?: string;
   image?: string;
+}
+
+interface updateUserParams {
+  id: string;
+  name: string;
+  email: string;
+  bio?: string | null;
+  image: string;
+  username: string;
+  path: string;
 }
 
 export const fetchUser = async ({
@@ -112,6 +123,41 @@ export const fetchUsers = async ({
     });
 
     return users;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+export const updateUser = async ({
+  id,
+  name,
+  email,
+  username,
+  image,
+  bio,
+  path
+}: updateUserParams) => {
+  try {
+    const exist = await db.user.findUnique({
+      where: { id },
+    });
+
+    if (!exist) return null;
+
+    const updateUser = await db.user.update({
+      where: { id },
+      data: {
+        name,
+        email,
+        username,
+        image,
+        bio,
+      },
+    });
+
+    revalidatePath(path)
+
+    return updateUser;
   } catch (error: any) {
     throw new Error(error.message);
   }

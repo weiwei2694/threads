@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { threadValidation } from "@/app/validations/thread.validations";
+import { threadValidation } from "@/validations/thread.validations";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -44,7 +44,7 @@ const Comment = ({ author, parentId }: Props) => {
       path,
     });
 
-    form.reset()
+    form.reset();
   };
 
   return (
