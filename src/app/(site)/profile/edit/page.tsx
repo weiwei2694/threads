@@ -12,11 +12,9 @@ const Page = async () => {
 
   return (
     <section>
-      <div className="p-6 rounded-xl bg-dark-2">
-        <AccountProfile user={userInfo} />
-      </div>
+      <AccountProfile user={userInfo} />
     </section>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
