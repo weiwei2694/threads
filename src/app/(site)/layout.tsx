@@ -2,7 +2,6 @@ import "../globals.css";
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import LeftSidebar from "@/components/LeftSidebar";
-import RightSidebar from "@/components/RightSidebar";
 import Topbar from "@/components/Topbar";
 import { ClerkProvider, currentUser } from "@clerk/nextjs";
 import { fetchUser } from "@/actions/user.actions";
@@ -39,8 +38,6 @@ export default async function RootLayout({
             <section className="main-container">
               <div className="max-w-4xl w-full">{children}</div>
             </section>
-
-            <RightSidebar />
           </main>
 
           <Bottombar />

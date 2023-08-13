@@ -97,15 +97,12 @@ export const getActivity = async (userId: string) => {
 export const fetchUsers = async ({
   userId,
   searchString = "",
-  take = 25,
 }: {
   userId: string;
   searchString: string;
-  take?: number | null;
 }) => {
   try {
     const users = await db.user.findMany({
-      take: take || 25,
       where: {
         id: {
           not: userId,
@@ -138,7 +135,7 @@ export const updateUser = async ({
   username,
   image,
   bio,
-  path
+  path,
 }: updateUserParams) => {
   try {
     const exist = await db.user.findUnique({
@@ -158,7 +155,7 @@ export const updateUser = async ({
       },
     });
 
-    revalidatePath(path)
+    revalidatePath(path);
 
     return updateUser;
   } catch (error: any) {
@@ -166,33 +163,41 @@ export const updateUser = async ({
   }
 };
 
-export const followUser = async ({ followerId, followingId, path }: { followerId: string; followingId: string; path: string; }) => {
+export const followUser = async ({
+  followerId,
+  followingId,
+  path,
+}: {
+  followerId: string;
+  followingId: string;
+  path: string;
+}) => {
   try {
     const existingFollower = await db.follower.findFirst({
       where: {
         followerId: followerId,
-        followingId: followingId
-      }
+        followingId: followingId,
+      },
     });
 
     if (existingFollower) {
       await db.follower.delete({
         where: {
-          id: existingFollower.id
-        }
+          id: existingFollower.id,
+        },
       });
 
-      return revalidatePath(path)
+      return revalidatePath(path);
     }
 
     await db.follower.create({
       data: {
         followerId: followerId,
-        followingId: followingId
-      }
+        followingId: followingId,
+      },
     });
 
-    return revalidatePath(path)
+    return revalidatePath(path);
   } catch (error: any) {
     throw new Error(error.message);
   }

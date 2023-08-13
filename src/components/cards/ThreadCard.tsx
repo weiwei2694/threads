@@ -99,8 +99,6 @@ const ThreadCard = ({
     );
   };
 
-  console.log(optimisticLikes);
-
   return (
     <article className="p-7 rounded-xl bg-dark-2 flex flex-col gap-6 relative">
       <div className="flex flex-row gap-5">
