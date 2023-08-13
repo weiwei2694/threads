@@ -220,14 +220,14 @@ const ThreadCard = ({
 
       {/* isProfile | Delete Thread Feature */}
       {isProfile && (
-        <div className="absolute top-6 right-6">
+        <div className="absolute top-3 md:top-6 right-0 md:right-6">
           <button type="button" onClick={handleDeleteThread}>
             <Image
               src="/assets/delete.svg"
               alt="Delete"
               width={23}
               height={23}
-              className="object-contain"
+              className="object-contain md:w-[23px] w-[19px] md:h-[23px] h-[19px]"
             />
           </button>
         </div>
