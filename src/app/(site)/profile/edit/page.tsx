@@ -12,13 +12,9 @@ const Page = async () => {
 
   return (
     <section>
-        <h1 className="heading-1">Edit Profile</h1>
-
-        <div className="mt-12">
-          <div className="p-6 rounded-xl bg-dark-2">
-            <AccountProfile user={userInfo} />
-          </div>
-        </div>
+      <div className="p-6 rounded-xl bg-dark-2">
+        <AccountProfile user={userInfo} />
+      </div>
     </section>
   )
 }
