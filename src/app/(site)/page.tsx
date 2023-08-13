@@ -19,29 +19,25 @@ export default async function Home() {
 
   return (
     <section>
-      <h1 className="heading-1">Home</h1>
-
-      <div className="mt-12">
-        <div className="flex flex-col gap-8">
-          {threads?.length > 0 ? (
-            <>
-              {threads.map((thread) => (
-                <ThreadCard
-                  key={thread.id}
-                  userId={userInfo.id}
-                  parentId={thread.id}
-                  author={thread.user}
-                  text={thread.text}
-                  comments={thread.children}
-                  likes={thread.likes}
-                  isComment
-                />
-              ))}
-            </>
-          ) : (
-            <p className="no-result">No Results</p>
-          )}
-        </div>
+      <div className="flex flex-col gap-8">
+        {threads?.length > 0 ? (
+          <>
+            {threads.map((thread) => (
+              <ThreadCard
+                key={thread.id}
+                userId={userInfo.id}
+                parentId={thread.id}
+                author={thread.user}
+                text={thread.text}
+                comments={thread.children}
+                likes={thread.likes}
+                isComment
+              />
+            ))}
+          </>
+        ) : (
+          <p className="no-result">No Results</p>
+        )}
       </div>
     </section>
   );

@@ -100,9 +100,9 @@ const ThreadCard = ({
   };
 
   return (
-    <article className="p-7 rounded-xl bg-dark-2 flex flex-col gap-6 relative">
+    <article className="py-2 md:p-7 rounded-none sm:rounded-xl bg-dark-2 flex flex-col gap-6 relative">
       <div className="flex flex-row gap-5">
-        <div className="flex flex-col items-center gap-3">
+        <div className="relative flex flex-col items-center gap-3">
           <div className="relative">
             <Image
               src={author.image}
@@ -120,7 +120,7 @@ const ThreadCard = ({
           <div className="flex flex-col gap-2">
             <Link href={`/profile/${author.id}`}>
               <h3 className="font-medium text-light-1 tracking-wider">
-                {author.name}
+                {author.username}
               </h3>
             </Link>
             <p className="text-light-2 font-light text-sm tracking-wider leading-6">
@@ -232,6 +232,8 @@ const ThreadCard = ({
           </button>
         </div>
       )}
+
+      <div className="h-[1px] w-full bg-[#3A3A40] block md:hidden" />
     </article>
   );
 };
