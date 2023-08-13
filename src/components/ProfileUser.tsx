@@ -51,13 +51,13 @@ const ProfileUser = ({ personalUser, userInfo, personal }: Props) => {
         {personal ? (
           <Button
             type="button"
-            className="bg-dark-3 hover:bg-dark-2 flex items-center px-4 sm:gap-2 gap-0 tracking-wider font-medium text-light-1"
+            className="bg-dark-3 hover:bg-dark-2 hidden md:flex items-center px-4 sm:gap-2 gap-0 tracking-wider font-medium text-light-1"
             onClick={() => router.push("/profile/edit")}
           >
             <span className="sm:text-xl text-base text-primary-500">
               <TbEdit />
             </span>
-            <span className="hidden sm:block">Edit</span>
+            <span>Edit</span>
           </Button>
         ) : (
           <div className="flex justify-start gap-5 max-md:hidden">
@@ -105,35 +105,47 @@ const ProfileUser = ({ personalUser, userInfo, personal }: Props) => {
       {/* Followers */}
       <div className="flex mb-5">
         <div className="flex items-center gap-1 text-light-2">
-          <span>{userInfo.followers.length}</span>{" "}
-          <h5>followers</h5>
+          <span>{userInfo.followers.length}</span> <h5>followers</h5>
         </div>
       </div>
 
       {/* Follow & Share */}
-      <div className="flex justify-between gap-5 mb-12 md:hidden">
-        <Button
-          type="button"
-          className="bg-dark-3 hover:bg-dark-2 flex items-center px-4 sm:gap-2 gap-0 tracking-wider font-medium text-light-1 w-full"
-          onClick={() =>
-            startTransition(() =>
-              followUser({
-                followerId: userInfo.id,
-                followingId: personalUser?.id || "",
-                path,
-              })
-            )
-          }
-        >
-          {isPending
-            ? "..."
-            : userInfo.followers.find(
-                ({ followingId }: { followingId: string }) =>
-                  followingId === personalUser?.id
+      <div className={`flex justify-between gap-5 mb-12 md:hidden ${personal && 'flex-row-reverse'}`}>
+        {personal ? (
+          <Button
+            type="button"
+            className="bg-dark-3 hover:bg-dark-2 flex items-center px-4 gap-2 tracking-wider font-medium text-light-1"
+            onClick={() => router.push("/profile/edit")}
+          >
+            <span className="sm:text-xl text-base text-primary-500">
+              <TbEdit />
+            </span>
+            <span>Edit</span>
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            className="bg-dark-3 hover:bg-dark-2 flex items-center px-4 sm:gap-2 gap-0 tracking-wider font-medium text-light-1 w-full"
+            onClick={() =>
+              startTransition(() =>
+                followUser({
+                  followerId: userInfo.id,
+                  followingId: personalUser?.id || "",
+                  path,
+                })
               )
-            ? "Unfollow"
-            : "Follow"}
-        </Button>
+            }
+          >
+            {isPending
+              ? "..."
+              : userInfo.followers.find(
+                  ({ followingId }: { followingId: string }) =>
+                    followingId === personalUser?.id
+                )
+              ? "Unfollow"
+              : "Follow"}
+          </Button>
+        )}
 
         <Button
           type="button"
