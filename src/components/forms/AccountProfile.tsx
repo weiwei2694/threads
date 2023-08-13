@@ -105,7 +105,7 @@ const AccountProfile = ({ user }: Props) => {
         email: user.email,
       });
   
-      router.push("/profile"); 
+      router.push(`/profile/${user.id}`); 
     } catch (error: any) {
       throw new Error(error.message)
     } finally {
