@@ -28,7 +28,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
       {/* Comment */}
       <div className="mt-8">
-        <div className="py-6 border-t border-b border-dark-3">
+        <div className="py-6">
           <Comment parentId={thread.id} author={userInfo} />
         </div>
       </div>
