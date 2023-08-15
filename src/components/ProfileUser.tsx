@@ -20,6 +20,11 @@ const ProfileUser = ({ personalUser, userInfo, personal }: Props) => {
 
   const [isPending, startTransition] = useTransition();
 
+  const followerExist = userInfo.followers.find(
+    ({ followingId }: { followingId: string }) =>
+      followingId === personalUser?.id
+  ) ? "Unfollow" : "Follow" ;
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-row justify-between">
@@ -68,20 +73,13 @@ const ProfileUser = ({ personalUser, userInfo, personal }: Props) => {
                 startTransition(() =>
                   followUser({
                     followerId: userInfo.id,
-                    followingId: personalUser?.id || "",
+                    followingId: personalUser?.id ?? "",
                     path,
                   })
                 )
               }
             >
-              {isPending
-                ? "..."
-                : userInfo.followers.find(
-                    ({ followingId }: { followingId: string }) =>
-                      followingId === personalUser?.id
-                  )
-                ? "Unfollow"
-                : "Follow"}
+              {isPending ? "..." : followerExist}
             </Button>
 
             <Button
@@ -110,7 +108,11 @@ const ProfileUser = ({ personalUser, userInfo, personal }: Props) => {
       </div>
 
       {/* Follow & Share */}
-      <div className={`flex justify-between gap-5 mb-12 md:hidden ${personal && 'flex-row-reverse'}`}>
+      <div
+        className={`flex justify-between gap-5 mb-12 md:hidden ${
+          personal && "flex-row-reverse"
+        }`}
+      >
         {personal ? (
           <Button
             type="button"
@@ -130,7 +132,7 @@ const ProfileUser = ({ personalUser, userInfo, personal }: Props) => {
               startTransition(() =>
                 followUser({
                   followerId: userInfo.id,
-                  followingId: personalUser?.id || "",
+                  followingId: personalUser?.id ?? "",
                   path,
                 })
               )
@@ -138,12 +140,7 @@ const ProfileUser = ({ personalUser, userInfo, personal }: Props) => {
           >
             {isPending
               ? "..."
-              : userInfo.followers.find(
-                  ({ followingId }: { followingId: string }) =>
-                    followingId === personalUser?.id
-                )
-              ? "Unfollow"
-              : "Follow"}
+              : followerExist}
           </Button>
         )}
 
