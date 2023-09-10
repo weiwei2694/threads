@@ -32,6 +32,7 @@ interface Props {
   likes: Like[];
   isProfile?: boolean;
   isComment?: boolean;
+  isPersonalUser?: boolean;
 }
 
 const ThreadCard = ({
@@ -43,6 +44,7 @@ const ThreadCard = ({
   likes,
   isProfile,
   isComment,
+  isPersonalUser
 }: Props) => {
   const router = useRouter();
   const path = usePathname();
@@ -219,7 +221,7 @@ const ThreadCard = ({
       )}
 
       {/* isProfile | Delete Thread Feature */}
-      {isProfile && (
+      {isProfile && isPersonalUser && (
         <div className="absolute top-3 md:top-6 right-0 md:right-6">
           <button type="button" onClick={handleDeleteThread}>
             <Image

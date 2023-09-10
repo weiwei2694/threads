@@ -67,6 +67,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
                       comments={thread.children}
                       isComment
                       isProfile
+                      isPersonalUser={personalUser.id === userInfo.id}
                     />
                   ))}
                 </div>
