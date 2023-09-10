@@ -15,7 +15,6 @@ function Topbar({ user }: Props) {
   return (
     <nav className="topbar">
       <Link href="/" className="flex items-center gap-4">
-        {/* <Image src="/assets/logo.svg" alt="logo" width={28} height={28} /> */}
         <p className="font-bold text-2xl text-light-1">Threads</p>
       </Link>
 
@@ -38,7 +37,7 @@ function Topbar({ user }: Props) {
         <div>
           <Link
             className="flex flex-row items-center gap-2 cursor-pointer"
-            href="/profile"
+            href={`/profile/${user.id}`}
           >
             <Image
               src={user.image}
