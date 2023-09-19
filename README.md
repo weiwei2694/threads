@@ -28,12 +28,11 @@ NEXT_PUBLIC_SECRET_KEY=
 NEXT_PUBLIC_DOMAIN=http://localhost:3000
 ```
 
-## If you want to run this project locally
-## Copy and paste into terminal
+## Cloning the repository
 ```
 git clone https://github.com/weiwei2694/threads.git
 ```
-## don't forget to install
+## Install Packages
 ```
 npm install
 # or
@@ -41,7 +40,7 @@ yarn install
 # or
 pnpm install
 ```
-## Run the development server
+## Start the app
 ```
 npm run dev
 # or
